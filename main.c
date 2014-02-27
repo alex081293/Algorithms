@@ -136,7 +136,8 @@ interrupt VectorNumber_Vtimmdcu void mdcuInterrupt () {
   // ALWAYS CLEAR THE FLAG FIRST!
   MCFLG |= 0x80;
   
-  
+  //
+
   Lcounter++;
   Rcounter++;
   
