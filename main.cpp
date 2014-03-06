@@ -18,6 +18,7 @@ int main() {
     // used for text file reading
     int i;
     int numOfPayouts;
+    int numofCompletedSets = 0;
     int readingLowStressComplete;
     int readingHighStressComplete;
     string line;
@@ -59,6 +60,7 @@ int main() {
                 readingHighStressComplete = 1;               
             }
             if(readingHighStressComplete == 1 && readingLowStressComplete == 1) {
+                numofCompletedSets++;
                 for(i = 0; i<numOfPayouts; i++){
                     cout << lowStress[i] << " ";
                 }
@@ -66,10 +68,12 @@ int main() {
                 for(i = 0; i<numOfPayouts; i++){
                     cout << highStress[i] << " ";
                 }
-                cout << "\n" << endl;                
+                if(numOfSets != numofCompletedSets) cout << "\n";
+                cout << endl;                
                 vector<int> newVector;
                 highStress = lowStress = newVector;
                 readingHighStressComplete = readingLowStressComplete = 0;
+
             }
         }
     }
