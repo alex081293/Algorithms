@@ -61,7 +61,8 @@ int main() {
                     s >> tmp;
                     highStress.push_back(atoi(tmp.c_str()));
                 }
-                readingHighStressComplete = 1;             
+                readingHighStressComplete = 1; 
+                cout << readingHighStressComplete << endl;              
             }
             if(readingHighStressComplete == 1 && readingLowStressComplete == 1) {
 
@@ -82,7 +83,7 @@ int main() {
                 }
                 cout << cost[numOfPayouts-1] << endl;
                 for(i=0; i < numOfPayouts; i++) {
-                    if(path[i+1] != 'H' || (i == 0 && path[i+1] != 'H')) {
+                    if(path[i+1] != 'H' || i == 0) {
                         cout << path[i] << " ";
                     }
                     else {
@@ -90,12 +91,21 @@ int main() {
                         i++;
                     }
                 }
+                cout << endl;
+
 
                 numofCompletedSets++;
-
-                if(numOfSets != numofCompletedSets) cout << "\n";  
-                cout << endl;             
+                for(i = 1; i<numOfPayouts; i++){
+                    cout << lowStress[i] << " ";
+                }
+                cout << endl;
+                for(i = 1; i<numOfPayouts; i++){
+                    cout << highStress[i] << " ";
+                }
+                if(numOfSets != numofCompletedSets) cout << "\n";
+                cout << endl;                
                 vector<int> newVector;
+                vector<char> newVectorChar;
                 path.clear();
                 highStress = lowStress = cost = newVector;
                 readingHighStressComplete = readingLowStressComplete = 0;
