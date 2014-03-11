@@ -21,6 +21,7 @@ int main() {
     int numofCompletedSets = 0;
     int readingLowStressComplete = 0;
     int readingHighStressComplete = 0;
+    int readCount = 0;
     string line;
     ifstream myfile("input.txt");
     ofstream writeFile("group12.txt");
@@ -40,7 +41,8 @@ int main() {
                 nextSpace+=4;
             }
             else if(lineCount == nextSpace-3) {
-                numOfPayouts = atoi(line.c_str()) + 1;
+                readCount = atoi(line.c_str());
+                numOfPayouts = readCount + 1;
                 lowStress.push_back(0);
                 highStress.push_back(0);
                 cost.push_back(0);
@@ -61,8 +63,7 @@ int main() {
                     s >> tmp;
                     highStress.push_back(atoi(tmp.c_str()));
                 }
-                readingHighStressComplete = 1; 
-                cout << readingHighStressComplete << endl;              
+                readingHighStressComplete = 1;             
             }
             if(readingHighStressComplete == 1 && readingLowStressComplete == 1) {
 
@@ -82,30 +83,27 @@ int main() {
             
                 }
                 cout << cost[numOfPayouts-1] << endl;
-                for(i=0; i < numOfPayouts; i++) {
-                    if(path[i+1] != 'H' || i == 0) {
-                        cout << path[i] << " ";
-                    }
-                    else {
-                        cout << "N H ";
-                        i++;
+                
+                char printArray[readCount];
+                for(i=numOfPayouts-2; i>=0; i--) {
+                    if(path[i] == 'L')
+                        printArray[i] = 'L';
+                    if(path[i] == 'H') {
+                        printArray[i] = 'H';
+                        printArray[i-1] = 'N';
+                        i--;
                     }
                 }
-                cout << endl;
 
+                for(i=0; i<numOfPayouts-1; i++) {
+                    cout << printArray[i] << " ";
+                }
 
                 numofCompletedSets++;
-                for(i = 1; i<numOfPayouts; i++){
-                    cout << lowStress[i] << " ";
-                }
-                cout << endl;
-                for(i = 1; i<numOfPayouts; i++){
-                    cout << highStress[i] << " ";
-                }
-                if(numOfSets != numofCompletedSets) cout << "\n";
-                cout << endl;                
+
+                if(numOfSets != numofCompletedSets) cout << "\n";  
+                cout << endl;             
                 vector<int> newVector;
-                vector<char> newVectorChar;
                 path.clear();
                 highStress = lowStress = cost = newVector;
                 readingHighStressComplete = readingLowStressComplete = 0;
