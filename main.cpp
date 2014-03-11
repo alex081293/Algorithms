@@ -82,9 +82,15 @@ int main() {
             
                 }
                 cout << cost[numOfPayouts-1] << endl;
-                for(i=0; i < numOfPayouts; i++)
-                    if(path[i+1] == 'H') cout << "N ";
-                    else cout << path[i] << " ";
+                for(i=0; i < numOfPayouts; i++) {
+                    if(path[i+1] != 'H' || i == 0) {
+                        cout << path[i] << " ";
+                    }
+                    else {
+                        cout << "N H ";
+                        i++;
+                    }
+                }
                 cout << endl;
 
 
