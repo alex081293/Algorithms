@@ -107,7 +107,7 @@ int main() {
                         i--;
                     }
                 }
-                // comment
+                // Prints array
                 for(i=0; i<numOfPayouts-1; i++) {
                     cout << printArray[i] << " ";
                 }
