@@ -40,6 +40,8 @@ int main() {
             else if(lineCount == nextSpace) {
                 nextSpace+=4;
             }
+            // Calculates number of payouts
+            // Also seeds 0's in both the arrays
             else if(lineCount == nextSpace-3) {
                 readCount = atoi(line.c_str());
                 numOfPayouts = readCount + 1;
@@ -47,6 +49,7 @@ int main() {
                 highStress.push_back(0);
                 cost.push_back(0);
             }
+            // Reads in low stress jobs
             else if(lineCount == nextSpace-2) {
                 stringstream s(line);
                 while(!s.eof()) {
@@ -56,6 +59,7 @@ int main() {
                 }
                 readingLowStressComplete = 1;
             }
+            // Reads in high stress jobs
             else if(lineCount == nextSpace-1) {
                 stringstream s(line);
                 while(!s.eof()) {
@@ -65,17 +69,24 @@ int main() {
                 }
                 readingHighStressComplete = 1;             
             }
+            // Once reading boths jobs, we can calculate the best possible payout
             if(readingHighStressComplete == 1 && readingLowStressComplete == 1) {
-
+                // Algorithm starts from the front, keeping the best possible cost
+                // from the week backwards
                 for(i=1; i<numOfPayouts; i++) {
                     int highPrevCost;
+                    // Deals with vector out of bounds
                     if(i==1) highPrevCost = 0;
                     else highPrevCost = cost[i-2];
 
+                    // If the low stress job + the best possible payouts from the the week before
+                    // is greater than the high stress job payout + the best possible payout from two
+                    // weeks before, we know we should take the low stress job
                     if(lowStress[i]+cost[i-1] > highStress[i]+highPrevCost) {
                         cost.push_back(lowStress[i] + cost[i-1]);
                         path.push_back('L');
                     }
+                    // Else take the high stress job
                     else {
                         cost.push_back(highStress[i] + highPrevCost);
                         path.push_back('H');
@@ -84,6 +95,8 @@ int main() {
                 }
                 cout << cost[numOfPayouts-1] << endl;
                 
+                // Algorithm to make sure it prints out the jobs correct
+                // with the N, where it should be.
                 char printArray[readCount];
                 for(i=numOfPayouts-2; i>=0; i--) {
                     if(path[i] == 'L')
@@ -103,6 +116,7 @@ int main() {
 
                 if(numOfSets != numofCompletedSets) cout << "\n";  
                 cout << endl;             
+                // Clears everything for the next set to be read
                 vector<int> newVector;
                 path.clear();
                 highStress = lowStress = cost = newVector;
