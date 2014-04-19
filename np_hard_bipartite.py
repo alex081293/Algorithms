@@ -135,7 +135,7 @@ numOfCrossEdges = findCrossEdges(partion1, partion2)
 partion1
 partion2
 
-sort vertex from highest edges to least
+sort vertex from highest edge count to least
 
 for each vertex in Graph
 	if(i % 2 == 0) 
@@ -149,6 +149,11 @@ numOfCrossEdges = (numOfCrossEdges > temp) ? numOfCrossEdges : temp
 
 -----------Algorithm 4---------
 
+// Does this algorithm 100 times, each result would come up differently
+// randomly insert a vertex into left and right side
+// then loop over both sets, checking to see if more cross edges would occur if it switched
+// to the other partion, which it does that 5 times.
+
 for 1 to 100 (or whatever number)
 	partion1
 	partion2
@@ -158,6 +163,25 @@ for 1 to 100 (or whatever number)
 			partion1.insert(vertex[i])
 		else
 			partion2.insert(vertex[i])
+
+	for 1 to 5
+		partion3 = partion1;
+		partion4 = partion2;
+		for i to number of vertexs
+			if(lastLooked == 1)
+				if(findCrossEdges(partion1, partion2) < findCrossEdges(partion3.insert(vertex[i]), partion4.delete(vertex[i])))))
+					partion1 = partion3
+					partion2 = partion4
+				else
+					partion3 = partion1
+					partion4 = partion2
+			else
+				if(findCrossEdges(partion1, partion2) < findCrossEdges(partion4.insert(vertex[i]), partion3.delete(vertex[i])))))
+					partion1 = partion3
+					partion2 = partion4
+				else
+					partion3 = partion1
+					partion4 = partion2				
 
 	temp = findCrossEdges(partion1, partion2)
 
@@ -185,6 +209,7 @@ for 1 to 100 (or whatever number)
 
 	numOfCrossEdges = (numOfCrossEdges > temp) ? numOfCrossEdges : temp
 
+-----------Algorithm 6---------
 
 '''
 
