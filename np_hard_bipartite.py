@@ -84,6 +84,109 @@ print nodes.next()
 print nodes.next()
 '''
 
+'''
+
+-----------Algorithm 1----------
+
+partition 1
+partition 2
+partition 3
+partition 4
+
+sort vertexs from highest edge count to least edge count
+
+place all vertexs in partion2 and partion4
+
+for each vertex in Graph
+	if(findCrossEdges(partion1, partion2) < findCrossEdges(partion3.insert(vertex[i]), partion4.delete(vertex[i])))))
+		partion1 = partion3
+		partion2 = partion4
+	else
+		partion3 = partion1
+		partion4 = partion2
+
+numOfCrossEdges = findCrossEdges(partion1, partion2)
+
+
+-----------Algorithm 2---------
+
+partition 1
+partition 2
+partition 3
+partition 4
+
+sort vertexs from lowest edge count to highest edge count
+
+place all vertexs in partion2 and partion4
+
+for each vertex in Graph
+	if(findCrossEdges(partion1, partion2) < findCrossEdges(partion3.insert(vertex[i]), partion4.delete(vertex[i])))))
+		partion1 = partion3
+		partion2 = partion4
+	else
+		partion3 = partion1
+		partion4 = partion2
+
+numOfCrossEdges = findCrossEdges(partion1, partion2)
+
+
+-----------Algorithm 3---------
+
+partion1
+partion2
+
+sort vertex from highest edges to least
+
+for each vertex in Graph
+	if(i % 2 == 0) 
+		partion1.insert(vertex[i])
+	else
+		partion2.insert(vertex[i])
+
+temp = findCrossEdges(partion1, partion2)
+
+numOfCrossEdges = (numOfCrossEdges > temp) ? numOfCrossEdges : temp
+
+-----------Algorithm 4---------
+
+for 1 to 100 (or whatever number)
+	partion1
+	partion2
+
+	for each vertex in graph
+		if(generateRandomNumber % 2 == 0)
+			partion1.insert(vertex[i])
+		else
+			partion2.insert(vertex[i])
+
+	temp = findCrossEdges(partion1, partion2)
+
+	numOfCrossEdges = (numOfCrossEdges > temp) ? numOfCrossEdges : temp
+
+-----------Algorithm 5---------
+// An enhancement to algorithm 4
+// Will ensure partions are balanced, but randomly insert to either side
+
+for 1 to 100 (or whatever number)
+	partion1
+	partion2
+	for each vertex in graph
+		if(partion1.size > partion2.size)
+			partion2.insert(vertex[i])
+		else if (partion2.size > partion1.size)
+			partion1.insert(vertex[i])
+		else
+			if(generateRandomNumber % 2 == 0)
+				partion1.insert(vertex[i])
+			else
+				partion2.insert(vertex[i])
+
+	temp = findCrossEdges(partion1, partion2)
+
+	numOfCrossEdges = (numOfCrossEdges > temp) ? numOfCrossEdges : temp
+
+
+'''
 
 # this was just to see how it works, probably not usful in this project
 #print nx.is_connected(Graph_1)
@@ -106,6 +209,9 @@ if nx.is_bipartite(Graph_1):
 	crossEdgeCount = 0
 	for i in range(0, len(partition1)):
 		crossEdgeCount += len(Graph_1.neighbors(partition1[i]))
+
+if !(nx.is_bipartite(Graph_1)):
+
 
 print 'this is where we start printing to output file'
 # this is the printing of the results to the screen and to the output file
