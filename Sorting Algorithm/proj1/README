@@ -1,0 +1,9 @@
+Alexander Moran
+COT4400 Proj1
+
+To compile the code, use the makefile
+
+=> Type 'make'
+=> Type './main'
+
+The output will be in 'moran.txt'
