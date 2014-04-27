@@ -3,6 +3,7 @@ from networkx.algorithms import bipartite
 import timeit
 import random
 
+# function to find cross edges between the two partitions
 def findEdgeCount(dictionary1, dictionary2):
 	crossEdgeCount = 0
 	if len(dictionary1) < len(dictionary2):
@@ -24,20 +25,24 @@ G = nx.Graph()
 inputFile = open("input8.txt", "r")
 outputFile = open("output8.txt", "w")
 
+# strips the string into the data we need
 nodesAndEdges = inputFile.readline().strip().split(" ")
 
 numNodes = int(nodesAndEdges[0])
 numEdges = int(nodesAndEdges[1])
 
+# adds nodes
 for i in range(1, numNodes + 1):
 	G.add_node(str(i))
 
+# adds edges
 for i in range(0, numEdges):
 	temp = inputFile.readline().strip().split(" ")
 	node1 = temp[0]
 	node2 = temp[1]
 	G.add_edge(node1, node2)
 
+# if the graph is bipartite, we can easily find the optimal soltuion
 if nx.is_bipartite(G):
 	top_nodes, bottom_nodes = bipartite.sets(G)
 	partition1 = list(top_nodes)
@@ -46,6 +51,7 @@ if nx.is_bipartite(G):
 	for i in range(0, len(partition1)):
 		maxEdgeCount += len(G.neighbors(partition1[i]))
 
+# If it's not bipartite, we must start attempting to find the optimal solution
 else:
 	graph_dict = dict()
 	sorted_graph_dict = dict()
@@ -57,14 +63,15 @@ else:
 
 	dict1 = dict()
 	dict2 = dict()
-	dict3 = dict()
 
+	# sorts graph by desc degree
 	sorted_graph_dict = dict(sorted(sorted_graph_dict.items(), key = lambda (k,v): len(v), reverse = True))	
 
 	dict1 = sorted_graph_dict
 
-	length = len(dict1)
-
+	# goes through each key of the dictionary which is on the left partition
+	# and checks to see if it has a greater cross edge count in partition 1 or 
+	# partition 2
 	for i in dict1.keys():
 		edgeCount1 = 0
 		edgeCount2 = 0
@@ -86,6 +93,8 @@ else:
 		partition1 = dict1.keys()
 		partition2 = dict2.keys()				
 
+	# Runs a randomized algorithm to check if we can beat our previous
+	# max edge count. If the a better soltion is found, we keep those partitions
 	for k in range(0, 1000):
 		temp1 = dict()
 		temp2 = dict()
@@ -104,30 +113,6 @@ else:
 			partition1 = temp1.keys()
 			partition2 = temp2.keys()
 		
-
-	for k in range(0, 1000):
-		temp1 = dict()
-		temp2 = dict()
-		for i in graph_dict:
-			if(len(temp1) > len(temp2)):
-				temp2[i] = graph_dict[i]
-			elif (len(temp1) < len(temp2)):
-				temp1[i] = graph_dict[i]
-			else:
-				x = random.randint(0, 6564823) % 2
-
-				if x == 0:
-					temp1[i] = graph_dict[i]
-				else:
-					temp2[i] = graph_dict[i]
-
-		currentEdgeCount = findEdgeCount(temp1, temp2)
-
-		if currentEdgeCount > maxEdgeCount:
-			maxEdgeCount = currentEdgeCount
-			partition1 = temp1.keys()
-			partition2 = temp2.keys()
-
 stop = timeit.default_timer()
 
 elapsed = (stop - start) * 1000.0
