@@ -8,14 +8,13 @@ What is the smallest positive number that is evenly divisible by all of the numb
 
 import itertools 
 def checkMultiple(num):
-	A = [2, 19, 17, 13, 11, 7, 5, 3, 20, 18, 16, 15, 14, 12, 10, 9, 8, 6, 4]
-	for i in range (0, 19):
+	A = [20, 18, 11, 13, 12, 14, 17, 19, 16, 12]
+	for i in range (0, 9):
 		if (num % A[i] != 0):
 			return False
 	return True
 
-for i in itertools.count(2520, 121645100408832000):
+for i in itertools.count(2520, 121645):
 	if (checkMultiple(i)):
 		print i
-		exit(1)
 print "Failure"
