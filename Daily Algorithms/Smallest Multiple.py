@@ -14,7 +14,9 @@ def checkMultiple(num):
 			return False
 	return True
 
-for i in itertools.count(2520, 121645100408832000):
+for i in itertools.count(2520, 12164500000):
+	if(i % 1000 == 0):
+		print i
 	if (checkMultiple(i)):
 		print i
 		exit(1)
