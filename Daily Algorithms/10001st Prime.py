@@ -1,22 +1,57 @@
-# 5/27/2014
-'''
-By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that the 6th prime is 13.
+import time
 
-What is the 10 001st prime number?
-'''
-import sys
+def find_neighbours(x_coord, y_coord):
+    neighbours = 0
+    for i in range(-1, 2):
+        x = (x_coord + i) % width
+        for j in range(-1, 2):
+            if i == 0 and j == 0:
+                continue
+            y = (y_coord + j) % height
+            if grid[y][x] == "#":
+                neighbours += 1
+    return neighbours
 
-A = [2]
-i = 1
-flag = 0
-for x in range(3, 100000000):
-	flag = 0
-	for y in range(0, len(A)):
-		if (x % A[y] == 0):
-			flag = 1
-	if (flag == 0):
-		A.append(x)
-		i += 1;
-		if (i == 10001):
-			print x
-			sys.exit()
+raw_data = """32 17 17
+.................
+.................
+....###...###....
+.................
+..#....#.#....#..
+..#....#.#....#..
+..#....#.#....#..
+....###...###....
+.................
+....###...###....
+..#....#.#....#..
+..#....#.#....#..
+..#....#.#....#..
+.................
+....###...###....
+.................
+................."""
+
+top_line, grid = raw_data.split("\n")[0], raw_data.split("\n")[1:]
+iterations, width, height = [int(x) for x in top_line.split()]
+
+for i in range(iterations):
+    new_grid = []
+    for y in range(height):
+        new_line = []
+        for x in range(width):
+            num_neighbours = find_neighbours(x, y)
+            if grid[y][x] == "." and num_neighbours == 3:
+                new_line.append("#")
+            elif grid[y][x] == "#" and num_neighbours < 2:
+                new_line.append(".")
+            elif grid[y][x] == "#" and num_neighbours > 3:
+                new_line.append(".")
+            else:
+                new_line.append(grid[y][x])
+        new_grid.append("".join(new_line))
+    grid = new_grid
+    print("\n"*15)
+    print("\n".join(grid))
+    time.sleep(0.5)
+
+print("\n".join(grid))
